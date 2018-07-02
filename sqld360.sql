@@ -145,7 +145,15 @@ BEGIN
 
 END;
 /
+
+
+-- planx
+col operation format a50
+select '@planx Y ' ||operation from plan_table;
+
 SPO OFF 
+
+
 SET DEF ON TERM ON
 @sqld360_driver.sql
-HOS rm sqld360_driver.sql
+--HOS rm sqld360_driver.sql
