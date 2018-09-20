@@ -63,6 +63,7 @@ SPO OFF;
 -- @@&&skip_10g.&&skip_11g.&&skip_12r101.sqld360_3d_inmemory.sql
 -- @@&&skip_10g.&&skip_11g.sqld360_3e_bt_cache.sql
 @@&&sqld360_skip_metadata.sqld360_3f_metadata.sql
+@@sqld360_3f_metadata_simple.sql
 
 
 -- PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
