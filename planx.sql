@@ -356,8 +356,9 @@ col sample_time format a30
 col run_time_timestamp format a30
 select sql_id,
        sql_plan_hash_value,
+       sql_exec_id,
        sample_time,
-       run_time run_time_timestamp,
+      run_time run_time_timestamp,
  (EXTRACT(HOUR FROM run_time) * 3600
                     + EXTRACT(MINUTE FROM run_time) * 60
                     + EXTRACT(SECOND FROM run_time)) run_time_sec
@@ -365,12 +366,13 @@ from  (
 select
        sql_id,
        sql_plan_hash_value,
+       sql_exec_id,
        max(SAMPLE_TIME) sample_time,
        max(sample_time - sql_exec_start) run_time
 from
        gv$active_session_history
 where sql_id = '&&sql_id.'
-and sql_exec_start is not null
+      and sql_exec_start is not null
 group by sql_id,sql_plan_hash_value,SQL_EXEC_ID
 order by sql_id
 )
@@ -605,6 +607,27 @@ SELECT others samples,
   FROM total
  WHERE others > 0
    AND ROUND(100 * others / samples, 1) > 0.1
+/
+PRO
+PRO
+PRO GV$ACTIVE_SESSION_HISTORY - px distribution
+PRO ~~~~~~~~~~~~~~~~~~~~~~~~~
+break on SQL_EXEC_ID on dop
+col dop format a10
+with sql_exec_id_data as (select sql_exec_id from 
+	(
+	select distinct sql_exec_id 
+	from gv$active_session_history 
+	where sql_id = '&&sql_id.' order by 1 desc
+	)
+	where rownum < 4)
+select sql_exec_id, case when px_flags is null then 'SERIAL' else 'px'||trunc(px_flags/2097152) end dop,
+       session_id, session_serial#, program, count(*)
+from gv$active_session_history
+where sql_id = '&&sql_id'
+and sql_exec_id in (select sql_exec_id from sql_exec_id_data)
+group by sql_exec_id, case when px_flags is null then 'SERIAL' else 'px'||trunc(px_flags/2097152) end, session_id, session_serial#, program
+order by 1 asc, 6 asc
 /
 PRO
 PRO
