@@ -21,9 +21,9 @@ SPO OFF;
 
 DEF column_number = '1';
 
---@@sqld360_1a_configuration.sql
---@@sqld360_1e_nls.sql
---@@sqld360_1f_observations.sql
+@@sqld360_1a_configuration.sql
+@@sqld360_1e_nls.sql
+@@sqld360_1f_observations.sql
 
 
 -- PRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
